@@ -1,12 +1,11 @@
-import { useTranslation } from "@/hooks/useTranslation";
 import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 
 const StrapiLocalization = () => {
-  const { t } = useTranslation("AboutUs.atAGlance", {
-    variables: {
-      date: "23.02.2023",
-    },
+  const { t } = useTranslation(undefined, {
+    keyPrefix: "AboutUs",
   });
 
   return (
@@ -18,8 +17,8 @@ const StrapiLocalization = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>{t("note")}</h1>
-        <h3>{t("title")}</h3>
+        <h1>{t("atAGlance.note")}</h1>
+        <h3>{t("atAGlance.title")}</h3>
       </main>
     </>
   );
@@ -27,7 +26,10 @@ const StrapiLocalization = () => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(ctx.locale!, ["common"])),
+      // Will be passed to the page component as props
+    },
   };
 };
 

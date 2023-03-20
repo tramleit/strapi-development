@@ -1,6 +1,6 @@
 import { StrapiContext } from "strapi-typed";
 import merge from "lodash/fp/merge";
-import { AdminService, CommonService } from "../../types";
+import { AdminService, CommonService, Localization } from "../../types";
 import { getPluginConfig, getPluginService } from "../utils/functions";
 
 const adminService: (context: StrapiContext) => AdminService = ({
@@ -24,7 +24,7 @@ const adminService: (context: StrapiContext) => AdminService = ({
     );
   },
 
-  async getByLocale(locale, fallback) {
+  async getByLocale(locale, namespace, fallback) {
     const commonService = getPluginService<CommonService>("common");
     const locales = await commonService.getLocales();
     const isFallbackValid = locales.find(({ code }) => code === fallback);
@@ -34,9 +34,15 @@ const adminService: (context: StrapiContext) => AdminService = ({
       ? await commonService.getLocalizations(fallback!)
       : null;
 
-    return fallbackLocalization
+    const resultLocalization = fallbackLocalization
       ? merge(fallbackLocalization, localeLocalization)
       : localeLocalization;
+
+    if (namespace) {
+      return resultLocalization[namespace] as unknown as Localization;
+    }
+
+    return resultLocalization;
   },
 
   async post(locale, payload) {

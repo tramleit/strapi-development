@@ -21,7 +21,7 @@ const adminControllers: AdminController = {
   async getByLocale(this: AdminController, ctx) {
     const { params } = ctx;
 
-    return await this.getService().getByLocale(params.locale);
+    return await this.getService().getByLocale(params.locale, params.namespace);
   },
 
   async post(this: AdminController, ctx) {

@@ -32,6 +32,16 @@ const routes: StrapiRoutes = {
       path: "/:locale",
       handler: "admin.getByLocale",
       config: {
+        auth: false,
+        policies: [],
+      },
+    },
+    {
+      method: "GET",
+      path: "/:locale/:namespace",
+      handler: "admin.getByLocale",
+      config: {
+        auth: false,
         policies: [],
       },
     },

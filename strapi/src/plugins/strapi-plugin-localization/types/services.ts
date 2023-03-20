@@ -7,7 +7,11 @@ export type LocalizationService = CommonService | AdminService;
 
 export type AdminService = {
   get: (withFallback?: boolean) => Promise<Localization>;
-  getByLocale: (locale: string, fallback?: string) => Promise<Localization>;
+  getByLocale: (
+    locale: string,
+    namespace?: string,
+    fallback?: string
+  ) => Promise<Localization>;
   post: (locale: string, payload: Localization) => Promise<Localization>;
   put: (locale: string, payload: Localization) => Promise<Localization>;
   delete: (locale: string) => Promise<Localization>;

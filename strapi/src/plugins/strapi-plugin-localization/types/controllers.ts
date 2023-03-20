@@ -21,7 +21,7 @@ export type AdminController = {
     Promise<Localization>,
     never,
     never,
-    { locale: string }
+    { locale: string; namespace?: string }
   >;
   post: StrapiController<
     Promise<Localization>,
